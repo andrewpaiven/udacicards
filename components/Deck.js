@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native'
 class Deck extends Component {
     render() {
         return (
-            <View style={styles.container}>
+            <View onPress={() => this.props.navigation.navigate('DeckSingleView')} style={styles.container}>
                 <Text style={styles.title}>{this.props.name}</Text>
                 <Text style={styles.numberOfCards}>{this.props.numberOfCards} cards</Text>
             </View>

@@ -5,13 +5,19 @@ import DeckSingleView from './components/DeckSingleView'
 import QuizView from './components/QuizView'
 import NewDeckView from './components/NewDeckView'
 import NewQuestionView from './components/NewQuestionView'
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator } from 'react-navigation'
+import * as API from './helpers/asyncStorageAPI'
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+      API.setFakeData()
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Tabs/>
+        <Stack/>
       </View>
     )
   }
@@ -19,7 +25,7 @@ export default class App extends React.Component {
 
 const Tabs = TabNavigator({
     AllDecks: {
-        screen: DeckListView
+        screen: DeckListView,
     },
     DeckSingleView: {
         screen: DeckSingleView
@@ -32,8 +38,31 @@ const Tabs = TabNavigator({
     },
     NewQuestionView: {
         screen: NewQuestionView
-    }
+    },
 })
+
+const Stack = StackNavigator(
+    {
+        Home: {
+            screen: DeckListView,
+            navigationOptions: {
+                title: 'Home',
+                headerStyle: {
+                    backgroundColor: 'black',
+                },
+                headerTintColor: 'white',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                },
+            }
+        },
+        DeckSingleView: {
+            screen: DeckSingleView
+        }
+    },
+    {
+        initialRouteName: 'Home',
+    })
 
 const styles = StyleSheet.create({
     container: {

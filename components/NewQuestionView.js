@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native'
+import { Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView} from 'react-native'
 
 class NewQuestionView extends Component {
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
                 <Text style={styles.prompt}>Enter your question</Text>
                 <TextInput style={styles.textInput}/>
                 <Text style={[styles.prompt,{marginTop: 40}]}>Enter the answer</Text>
@@ -12,7 +12,7 @@ class NewQuestionView extends Component {
                 <TouchableOpacity style={styles.submitBtn}>
                     <Text style={{color: 'white'}}>Submit</Text>
                 </TouchableOpacity>
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }
