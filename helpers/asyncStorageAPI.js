@@ -26,15 +26,6 @@ const fakeData = {
             }
         ]
     },
-    Arroyos: {
-        title: 'Arroyos',
-        questions: [
-            {
-                question: 'Are arroyos nice people?',
-                answer: 'If you provide them with infinite alcohols and food, yes. Otherwise, use at your own discretion and risk'
-            }
-        ]
-    }
 }
 
 export const setFakeData = () => {
@@ -43,7 +34,7 @@ export const setFakeData = () => {
 
 export const getDecks = () => {
     return AsyncStorage.getItem(KEY)
-        .then(items => (JSON.parse(items)))
+        .then(items =>JSON.parse(items))
 }
 
 export const getDeck = (id) => {
@@ -52,8 +43,14 @@ export const getDeck = (id) => {
         .then((itemsJSON) => itemsJSON[id])
 }
 
-export const saveDeckTitle = () => {
-
+export const saveDeckTitle = (title) => {
+    getDecks().then(decks=>{
+        decks[title] = {
+            title: title,
+            questions: []
+        }
+        return AsyncStorage.setItem(KEY,JSON.stringify(decks))
+    })
 }
 
 export const addCardToDeck = () => {

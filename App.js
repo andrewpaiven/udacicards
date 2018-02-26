@@ -1,50 +1,61 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native'
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native'
 import DeckListView from './components/DeckListView'
 import DeckSingleView from './components/DeckSingleView'
 import QuizView from './components/QuizView'
 import NewDeckView from './components/NewDeckView'
-import NewQuestionView from './components/NewQuestionView'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import * as API from './helpers/asyncStorageAPI'
+import { Constants } from 'expo'
 
-export default class App extends React.Component {
+export default class App extends Component {
+
+  state = {
+      decks: {
+      }
+  }
 
   componentDidMount() {
       API.setFakeData()
+      API.getDecks().then(decks=>this.setState({decks: decks}))
+  }
+
+  updateDecks = (newDeck) => {
+        let decks = this.state.decks
+        decks[newDeck]= {
+            title: newDeck,
+            questions: []
+        }
+        this.setState({decks: decks})
   }
 
   render() {
+      const screenProps = {
+          decks: this.state.decks,
+          updateDecks: this.updateDecks
+      }
     return (
       <View style={styles.container}>
-        <Stack/>
+        <MainNavigator screenProps={screenProps}/>
       </View>
     )
   }
+
 }
 
 const Tabs = TabNavigator({
     AllDecks: {
         screen: DeckListView,
     },
-    DeckSingleView: {
-        screen: DeckSingleView
-    },
-    QuizView: {
-        screen: QuizView
-    },
     NewDeckView: {
-        screen: NewDeckView
-    },
-    NewQuestionView: {
-        screen: NewQuestionView
+        screen: NewDeckView,
     },
 })
 
-const Stack = StackNavigator(
+const MainNavigator = StackNavigator(
     {
         Home: {
-            screen: DeckListView,
+            screen: Tabs,
             navigationOptions: {
                 title: 'Home',
                 headerStyle: {
@@ -58,7 +69,10 @@ const Stack = StackNavigator(
         },
         DeckSingleView: {
             screen: DeckSingleView
-        }
+        },
+        QuizView: {
+            screen: QuizView
+        },
     },
     {
         initialRouteName: 'Home',
@@ -67,7 +81,7 @@ const Stack = StackNavigator(
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      marginTop: 20,
+      marginTop: Constants.statusBarHeight,
     },
 })
 
