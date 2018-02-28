@@ -4,6 +4,7 @@ import DeckListView from './components/DeckListView'
 import DeckSingleView from './components/DeckSingleView'
 import QuizView from './components/QuizView'
 import NewDeckView from './components/NewDeckView'
+import NewQuestionView from './components/NewQuestionView'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import * as API from './helpers/asyncStorageAPI'
 import { Constants } from 'expo'
@@ -16,11 +17,10 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-      API.setFakeData()
       API.getDecks().then(decks=>this.setState({decks: decks}))
   }
 
-  updateDecks = (newDeck) => {
+  addNewDeck = (newDeck) => {
         let decks = this.state.decks
         decks[newDeck]= {
             title: newDeck,
@@ -29,10 +29,27 @@ export default class App extends Component {
         this.setState({decks: decks})
   }
 
+  addNewCard = (title,question,answer) => {
+      API.getDecks().then(decks=>{
+          decks[title] = {
+              ...decks[title],
+              questions: [
+                  ...decks[title].questions,
+                  {
+                      question: question,
+                      answer: answer
+                  }
+              ]
+          }
+          this.setState({decks: decks})
+      })
+  }
+
   render() {
       const screenProps = {
           decks: this.state.decks,
-          updateDecks: this.updateDecks
+          addNewDeck: this.addNewDeck,
+          addNewCard: this.addNewCard
       }
     return (
       <View style={styles.container}>
@@ -73,6 +90,9 @@ const MainNavigator = StackNavigator(
         QuizView: {
             screen: QuizView
         },
+        NewQuestionView: {
+            screen: NewQuestionView
+        }
     },
     {
         initialRouteName: 'Home',

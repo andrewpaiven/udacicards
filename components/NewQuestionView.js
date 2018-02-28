@@ -1,15 +1,25 @@
 import React, { Component } from 'react'
 import { Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView} from 'react-native'
+import * as API from '../helpers/asyncStorageAPI'
 
 class NewQuestionView extends Component {
+
+    handleAddNewCard = () => {
+        const { deck, addNewCard } = this.props.navigation.state.params
+        const { question, answer } = this.state
+        API.addCardToDeck(deck.title,question,answer)
+        addNewCard(deck.title,question,answer)
+        this.props.navigation.navigate('DeckSingleView',{deckTitle: deck.title})
+    }
+
     render() {
         return (
             <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
                 <Text style={styles.prompt}>Enter your question</Text>
-                <TextInput style={styles.textInput}/>
+                <TextInput style={styles.textInput} onChangeText={(text)=>(this.setState({question: text}))}/>
                 <Text style={[styles.prompt,{marginTop: 40}]}>Enter the answer</Text>
-                <TextInput style={styles.textInput}/>
-                <TouchableOpacity style={styles.submitBtn}>
+                <TextInput style={styles.textInput} onChangeText={(text)=>(this.setState({answer: text}))}/>
+                <TouchableOpacity style={styles.submitBtn} onPress={this.handleAddNewCard}>
                     <Text style={{color: 'white'}}>Submit</Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>

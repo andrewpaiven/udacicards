@@ -53,6 +53,18 @@ export const saveDeckTitle = (title) => {
     })
 }
 
-export const addCardToDeck = () => {
-
+export const addCardToDeck = (title,question,answer) => {
+    getDecks().then(decks=>{
+        decks[title] = {
+            ...decks[title],
+            questions: [
+                ...decks[title].questions,
+                {
+                    question: question,
+                    answer: answer
+                }
+            ]
+        }
+        return AsyncStorage.setItem(KEY,JSON.stringify(decks))
+    })
 }

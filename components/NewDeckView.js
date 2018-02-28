@@ -11,7 +11,7 @@ class NewDeckView extends Component {
     addNewDeckTitle = () => {
         if(this.state.textInput !== ""){
             API.saveDeckTitle(this.state.textInput)
-            this.props.screenProps.updateDecks(this.state.textInput)
+            this.props.screenProps.addNewDeck(this.state.textInput)
             this.props.navigation.navigate('Home')
         }
     }
@@ -19,7 +19,7 @@ class NewDeckView extends Component {
     render() {
         return (
             <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
-                <Text style={styles.question}>What is the title of your new deck ?</Text>
+                <Text style={styles.question}>What is the title of the new deck ?</Text>
                 <TextInput style={styles.textInput} onChangeText={(text)=>(this.setState({textInput: text}))}/>
                 <TouchableOpacity onPress={this.addNewDeckTitle} style={styles.submitBtn}>
                     <Text style={{color: 'white'}}>Submit</Text>

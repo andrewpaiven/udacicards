@@ -4,14 +4,17 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 class DeckSingleView extends Component {
 
     render() {
+        const {deckTitle} = this.props.navigation.state.params
+        const {decks, addNewCard} = this.props.screenProps
+        const deck = decks[deckTitle]
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>React Udacity</Text>
-                <Text style={styles.numberOfCards}>5 cards</Text>
-                <TouchableOpacity style={[styles.button,{marginTop: 50}]}>
+                <Text style={styles.title}>{deck.title}</Text>
+                <Text style={styles.numberOfCards}>{deck.questions.length} cards</Text>
+                <TouchableOpacity style={[styles.button,{marginTop: 50}]} onPress={() => this.props.navigation.navigate('NewQuestionView',{deck: deck, addNewCard: addNewCard})}>
                     <Text>Add Card</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button,styles.buttonStartQuiz]}>
+                <TouchableOpacity style={[styles.button,styles.buttonStartQuiz]} onPress={() => this.props.navigation.navigate('QuizView',{deck: deck})}>
                     <Text style={{color: 'white'}}>Start Quiz</Text>
                 </TouchableOpacity>
             </View>
