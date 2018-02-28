@@ -9,10 +9,11 @@ class NewDeckView extends Component {
     }
 
     addNewDeckTitle = () => {
-        if(this.state.textInput !== ""){
-            API.saveDeckTitle(this.state.textInput)
-            this.props.screenProps.addNewDeck(this.state.textInput)
-            this.props.navigation.navigate('Home')
+        const {textInput} = this.state
+        if(textInput !== ""){
+            API.saveDeckTitle(textInput)
+            this.props.screenProps.addNewDeck(textInput)
+            this.props.navigation.navigate('DeckSingleView',{deckTitle: textInput})
         }
     }
 

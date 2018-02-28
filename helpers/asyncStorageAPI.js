@@ -28,7 +28,7 @@ const fakeData = {
     },
 }
 
-export const setFakeData = () => {
+export const initData = () => {
     return AsyncStorage.setItem(KEY,JSON.stringify(fakeData))
 }
 
@@ -37,17 +37,13 @@ export const getDecks = () => {
         .then(items =>JSON.parse(items))
 }
 
-export const getDeck = (id) => {
-    return AsyncStorage.getItem(KEY)
-        .then(items => (JSON.parse(items)))
-        .then((itemsJSON) => itemsJSON[id])
-}
-
 export const saveDeckTitle = (title) => {
     getDecks().then(decks=>{
-        decks[title] = {
-            title: title,
-            questions: []
+        if(!decks.hasOwnProperty(title)) {
+            decks[title] = {
+                title: title,
+                questions: []
+            }
         }
         return AsyncStorage.setItem(KEY,JSON.stringify(decks))
     })

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 
 class QuizView extends Component {
 
@@ -45,6 +45,15 @@ class QuizView extends Component {
         show === true ? this.setState({showAnswer:true}) : this.setState({showAnswer:false})
     }
 
+    restartQuiz = () => {
+        this.setState({
+            currentQuestion: 0,
+            correctAnswers: 0,
+            quizCompleted: false,
+            showAnswer: false
+        })
+    }
+
     resultCongrats = () => {
         const {deck,correctAnswers} = this.state
         const scorePercentage = correctAnswers/deck.questions.length*100
@@ -58,7 +67,16 @@ class QuizView extends Component {
 
     render() {
         const {currentQuestion,deck,quizCompleted,correctAnswers} = this.state
-        if(!quizCompleted) return (
+        if(deck.questions.length === 0) return (
+            <View style={[styles.container,{alignItems: 'center'}]}>
+                <Image
+                    style={{width: 200, height: 200}}
+                    source={{uri: 'http://images6.fanpop.com/image/photos/36800000/Mr-T-mrt-36834265-320-254.png'}}
+                />
+                <Text style={{marginTop: 20, fontSize: 15, textAlign: 'center'}}>You fool, you ain't got no cards to play !</Text>
+            </View>
+        )
+        if(!quizCompleted && deck.questions[currentQuestion]) return (
                     <View style={styles.container}>
                         <Text style={styles.cardCounter}>{this.state.currentQuestion+1}/{this.state.deck.questions.length}</Text>
                         <View style={[styles.container,{alignItems: 'center'}]}>
@@ -81,8 +99,11 @@ class QuizView extends Component {
                     </View>
         )
         else return (
-            <View style={styles.container}>
-                <Text style={styles.question}>You finished the test with a {this.resultCongrats()} score of {correctAnswers} out of {deck.questions.length}</Text>
+            <View style={[styles.container,{alignItems:'center'}]}>
+                <Text style={styles.result}>You finished the test with a {this.resultCongrats()} score of {correctAnswers} out of {deck.questions.length}</Text>
+                <TouchableOpacity style={[styles.button,styles.buttonStartQuiz]} onPress={() => this.restartQuiz()}>
+                    <Text style={{color: 'white'}}>Restart Quiz</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -96,6 +117,10 @@ styles = StyleSheet.create({
     },
     question: {
         fontSize: 30,
+        textAlign: 'center'
+    },
+    result: {
+        fontSize: 15,
         textAlign: 'center'
     },
     answerBtn: {
@@ -120,8 +145,11 @@ styles = StyleSheet.create({
     cardCounter: {
         alignItems: 'flex-start',
         fontSize: 20,
+    },
+    buttonStartQuiz: {
+        backgroundColor: 'black',
+        marginTop: 50,
     }
-
 })
 
 export default QuizView
