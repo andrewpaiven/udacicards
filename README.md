@@ -5,13 +5,14 @@ Udacicards is an iOS application that allows you to learn by practising question
 
 **Installation instructions**
 
-Installing udacicards is a simple 4 step process:
+Installing udacicards is a simple 6 step process:
 
 1. Download the expo application for iOS
 2. Clone or download this repository to your computer
 3. Open the terminal on the root of the project and run the cmd `yarn install` to install all dependencies
 4. Run the cmd `yarn start`
 5. Open the expo on the phone, press _Scan QR Code_ and scan the QR code displayed on the terminal
+6. Enjoy
 
 **Credits**
 
