@@ -17,6 +17,9 @@ class DeckSingleView extends Component {
                 <TouchableOpacity style={[styles.button,styles.buttonStartQuiz]} onPress={() => this.props.navigation.navigate('QuizView',{deck: deck})}>
                     <Text style={{color: 'white'}}>Start Quiz</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.backToDecks} onPress={() => this.props.navigation.navigate('Home')}>
+                    <Text style={{color: 'black'}}>back to decks</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -49,6 +52,9 @@ const styles = StyleSheet.create({
     },
     buttonStartQuiz: {
         backgroundColor: 'black',
+    },
+    backToDecks: {
+        marginTop: 200,
     }
 })
 

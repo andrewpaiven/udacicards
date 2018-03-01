@@ -58,8 +58,8 @@ class QuizView extends Component {
         const {deck,correctAnswers} = this.state
         const scorePercentage = correctAnswers/deck.questions.length*100
         if(scorePercentage <= 20) return 'Ridiculous'
-        if(scorePercentage <= 50) return 'Miserable'
-        if(scorePercentage <= 75) return 'Bleh'
+        if(scorePercentage <= 50) return 'Half Stupid'
+        if(scorePercentage <= 75) return 'Moderately Bright'
         if(scorePercentage <= 90) return 'Fine'
         if(scorePercentage < 100) return 'Great'
         if(scorePercentage === 100) return 'Godlike'
@@ -87,7 +87,7 @@ class QuizView extends Component {
                                 </TouchableOpacity>
                             }
                             {this.state.showAnswer &&
-                                <Text>{deck.questions[currentQuestion].answer}</Text>
+                                <Text style={styles.answer}>{deck.questions[currentQuestion].answer}</Text>
                             }
                             <TouchableOpacity style={[styles.button,styles.buttonCorrect,{marginTop: 50}]} onPress={()=>this.submitAnswer(true)}>
                                 <Text style={{color: 'white'}}>Correct</Text>
@@ -149,6 +149,10 @@ styles = StyleSheet.create({
     buttonStartQuiz: {
         backgroundColor: 'black',
         marginTop: 50,
+    },
+    answer: {
+        textAlign: 'center',
+        marginTop: 10,
     }
 })
 

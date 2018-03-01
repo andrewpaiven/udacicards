@@ -4,17 +4,28 @@ import * as API from '../helpers/asyncStorageAPI'
 
 class NewQuestionView extends Component {
 
+    state = {
+        error: null
+    }
+
     handleAddNewCard = () => {
         const { deck, addNewCard } = this.props.navigation.state.params
         const { question, answer } = this.state
-        API.addCardToDeck(deck.title,question,answer)
-        addNewCard(deck.title,question,answer)
-        this.props.navigation.navigate('DeckSingleView',{deckTitle: deck.title})
+        if(question && question !== "" && answer && answer !== "") {
+            API.addCardToDeck(deck.title, question, answer)
+            addNewCard(deck.title, question, answer)
+            this.setState({error: null})
+            this.props.navigation.navigate('DeckSingleView', {deckTitle: deck.title})
+        }
+        else this.setState({error: "Please fill both question and answer fields"})
     }
 
     render() {
         return (
-            <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
+            <KeyboardAvoidingView style={styles.container} behavior={'height'}>
+                {this.state.error &&
+                <Text style={{marginBottom: 30, color: 'red'}}>{this.state.error}</Text>
+                }
                 <Text style={styles.prompt}>Enter your question</Text>
                 <TextInput style={styles.textInput} onChangeText={(text)=>(this.setState({question: text}))}/>
                 <Text style={[styles.prompt,{marginTop: 40}]}>Enter the answer</Text>

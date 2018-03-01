@@ -1,19 +1,21 @@
 import { AsyncStorage } from 'react-native'
-
-
-const KEY = "UDACICARDS"
+const KEY = "andracicards"
 
 const fakeData = {
-    React: {
-        title: 'React',
+    Geography: {
+        title: 'Geography',
         questions: [
             {
-                question: 'What is React?',
-                answer: 'A library for managing user interfaces'
+                question: 'How many Oceans are there in the world ?',
+                answer: 'There are a total 5 oceans in the world: atlantic, pacific, indian, artic and southern'
             },
             {
-                question: 'Where do you make Ajax requests in React?',
-                answer: 'The componentDidMount lifecycle event'
+                question: 'How many continents are there in the world ?',
+                answer: 'Thera are 7 continents in the world: Europe, Asia, Africa, Antartica, North America, South America and Australia '
+            },
+            {
+                question: 'How many countries are there in the world ?',
+                answer: 'According to the UN, there are 195 sovereign states in the world'
             }
         ]
     },
@@ -29,7 +31,7 @@ const fakeData = {
 }
 
 export const initData = () => {
-    return AsyncStorage.setItem(KEY,JSON.stringify(fakeData))
+    return AsyncStorage.mergeItem(KEY,JSON.stringify(fakeData))
 }
 
 export const getDecks = () => {

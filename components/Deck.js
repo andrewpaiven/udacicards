@@ -12,8 +12,6 @@ class Deck extends Component {
     }
 }
 
-export default Deck
-
 const styles = StyleSheet.create({
     container: {
         paddingTop: 30,
@@ -32,5 +30,6 @@ const styles = StyleSheet.create({
         marginTop: 5,
         color: 'grey'
     }
-
 })
+
+export default Deck

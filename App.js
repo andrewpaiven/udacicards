@@ -9,6 +9,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import * as API from './helpers/asyncStorageAPI'
 import { Constants } from 'expo'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { setUpNotifications } from './helpers/notifications'
 
 export default class App extends Component {
 
@@ -18,6 +19,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+      setUpNotifications()
       API.initData()
       API.getDecks().then(decks=>this.setState({decks: decks}))
   }
@@ -106,13 +108,15 @@ const MainNavigator = StackNavigator(
                     fontWeight: 'bold',
                 },
                 title: 'Decks',
+                header: null,
             },
         },
         DeckSingleView: {
             screen: DeckSingleView,
             navigationOptions: {
-                title: 'Deck'
-            }
+                title: 'Deck',
+                header: null,
+            },
         },
         QuizView: {
             screen: QuizView,
